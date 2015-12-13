@@ -303,6 +303,10 @@ and another to check the spelling and grammar of text buffers.
 This section is reserved to configure my custom keyboard shortcuts.
 
 #+begin_src emacs-lisp
+;; Edit emacs config
+(global-set-key (kbd "s-e") (lambda() 
+  (interactive)(find-file "~/.emacs.d/MyConfig.org")
+))
 #+end_src
 
 
@@ -364,22 +368,21 @@ individual languages set here.
           (run-hooks 'prog-mode-hook)))))
 #+END_SRC
 *** org-mode
-ox-reveal ox-impress-js org-jekyll org-magit org-present
-#+BEGIN_SRC emacs-lisp
-(use-package ox-reveal 
-:ensure t)
-(use-package ox-impress-js 
-:ensure t)
-(use-package org-jekyll
-:ensure t)
-(use-package org-magit 
-:ensure t)
-(use-package org-present 
-:ensure t)
 
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook (lambda () 
+  (use-package ox-reveal :ensure t)
+  (use-package ox-impress-js :ensure t)
+  (use-package org-jekyll :ensure t)
+  (use-package org-magit :ensure t)
+  (use-package org-present :ensure t)
+  (load-theme 'manoj-dark t)
+  (add-hook 'completion-at-point-functions 
+    'pcomplete-completions-at-point nil t)
+))
 #+END_SRC
 *** dockerfile-mode
-docker 
+ 
 #+BEGIN_SRC emacs-lisp
 (use-package dockerfile-mode
 :ensure t)
@@ -423,12 +426,14 @@ feature-mode
 :ensure t)
 #+END_SRC
 *** ansible
-ansible-doc
+To help writing ansible playbooks, there are some modules like ansible-mode and ansible-doc. 
 #+BEGIN_SRC emacs-lisp
-(use-package ansible
-:ensure t)
-(use-package ansible-doc
-:ensure t)
+(add-hook 'ansible-hook (lambda () 
+  (use-package ansible :ensure t)  
+  (use-package ansible-doc :ensure t)
+  (use-package company-ansible :ensure t)
+  (add-to-list 'company-backends 'company-ansible)
+))
 #+END_SRC
 *** magit
 #+BEGIN_SRC emacs-lisp
