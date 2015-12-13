@@ -113,7 +113,7 @@ modes, in all buffers.
 #+end_src
 
 
-** Look and Feel and User Interface 				   :noexport:
+** Look and Feel and User Interface 				    :enabled:
 
 Is very important to have a nice environment to work.
 Lets enable a dark theme, a nice font face and a new
