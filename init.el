@@ -8,6 +8,6 @@
 (load custom-file)
 
 (load-file "~/.emacs.d/org-dotemacs.el")
-(org-dotemacs-load-file "~/.emacs.d/my_emacs_config.org" "")
+(org-dotemacs-default-file "~/.emacs.d/MyConfig.org" "enabled")
 
 ;;; init.el ends here
