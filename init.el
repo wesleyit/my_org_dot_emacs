@@ -8,6 +8,8 @@
 (load custom-file)
 
 (load-file "~/.emacs.d/org-dotemacs.el")
-(org-dotemacs-default-file "~/.emacs.d/MyConfig.org" "enabled")
+(let 
+  (find-file-hook) 
+  (org-dotemacs-load-file ":enabled:" "~/.emacs.d/MyConfig.org"))
 
 ;;; init.el ends here
