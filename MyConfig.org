@@ -262,7 +262,7 @@ backends to improve the completion features.
 
 ** Snippets and Templates					    :enabled:
 
-Install and enable Yasnippet engine.
+*** Install and enable Yasnippet engine.			    :enabled:
 
 #+begin_src emacs-lisp
 ;; We want on all buffers
@@ -273,7 +273,16 @@ Install and enable Yasnippet engine.
 #+end_src
    
 
-** Code Lint and Spellcheck					    :enabled:
+*** Configure the file templates				    :enabled:
+
+#+BEGIN_SRC emacs-lisp
+(auto-insert-mode)
+(setq auto-insert-directory "~/.emacs.d/templates/")
+(setq auto-insert-query nil)
+#+END_SRC
+
+
+** Code Lint and Spell Check 					    :enabled:
 
 This section will configure one tool to check the code lint and compliance,
 and another to check the spelling and grammar of text buffers.
@@ -305,8 +314,10 @@ This section is reserved to configure my custom keyboard shortcuts.
 #+begin_src emacs-lisp
 ;; Edit emacs config
 (global-set-key (kbd "s-e") (lambda() 
-  (interactive)(find-file "~/.emacs.d/MyConfig.org")
-))
+  (interactive)(find-file "~/.emacs.d/MyConfig.org")))
+;; Open my personal org-mode file
+(global-set-key (kbd "s-o") (lambda() 
+  (interactive)(find-file "~/Documents/Wesley_TODO.org")))
 #+end_src
 
 
@@ -376,6 +387,7 @@ individual languages set here.
   (use-package org-jekyll :ensure t)
   (use-package org-magit :ensure t)
   (use-package org-present :ensure t)
+  (let ((color-theme-is-global nil)))
   (load-theme 'manoj-dark t)
   (add-hook 'completion-at-point-functions 
     'pcomplete-completions-at-point nil t)
@@ -384,10 +396,12 @@ individual languages set here.
 *** dockerfile-mode
  
 #+BEGIN_SRC emacs-lisp
-(use-package dockerfile-mode
-:ensure t)
-(use-package docker
-:ensure t)
+(use-package dockerfile-mode :ensure t)
+(use-package docker :ensure t)
+(add-hook 'dockerfile-mode-hook (lambda ()
+  (define-auto-insert "Dockerfile" "Dockerfile")
+  (auto-insert)
+))
 #+END_SRC
 *** elixir-mode 
 elixir-mix alchemist elixir-yasnippets
