@@ -72,8 +72,8 @@ can change, and those little things stacked can make your day happiest.
 (setq display-buffer-function 'popwin:display-buffer)
 (push '("^\*helm .+\*$" :regexp t) popwin:special-display-config)
 (push '("^\*helm-.+\*$" :regexp t) popwin:special-display-config)
-(setq-default message-log-max nil)
-(kill-buffer "*Messages*")
+;;(setq-default message-log-max nil)
+;;(kill-buffer "*Messages*")
 (add-hook 'minibuffer-exit-hook
   '(lambda ()
     (let ((buffer "*Completions*"))
@@ -158,7 +158,7 @@ status bar with a beautiful theme.
 
 
 ** Autocomplete Features					    :enabled:
-
+   
 *** helm							    :enabled:
 
 Helm is a different way to deal with M-x menu and completions.
@@ -318,6 +318,13 @@ This section is reserved to configure my custom keyboard shortcuts.
 ;; Open my personal org-mode file
 (global-set-key (kbd "s-o") (lambda() 
   (interactive)(find-file "~/Documents/Wesley_TODO.org")))
+;; Enable the console on ruby
+(global-set-key (kbd "s-r") (lambda()(interactive)
+  (inf-ruby)
+  (shrink-window 16)
+  (other-window -1)
+  (robe-start)
+  (robe-mode)))
 (global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
 (global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
 (global-set-key (kbd "S-C-<down>") 'shrink-window)
@@ -335,47 +342,35 @@ individual languages set here.
 *** ruby-mode
 
 #+BEGIN_SRC emacs-lisp
-(use-package ruby-mode
-  :commands ruby-mode
-  :mode (("Gemfile\\'" . ruby-mode)
-         ("Kirkfile\\'" . ruby-mode)
-         ("Rakefile\\'" . ruby-mode)
-         ("Vagrantfile\\'" . ruby-mode)
-         ("\\.builder\\'" . ruby-mode)
-         ("\\.gemspec\\'" . ruby-mode)
-         ("\\.irbrc\\'" . ruby-mode)
-         ("\\.pryrc\\'" . ruby-mode)
-         ("\\.rake\\'" . ruby-mode)
-         ("\\.rjs\\'" . ruby-mode)
-         ("\\.ru\\'" . ruby-mode)
-         ("\\.rxml\\'" . ruby-mode))
-  :init
-  (setq ruby-use-encoding-map nil)
-  :config
-    (use-package rvm :init (rvm-use-default) :config (setq rvm-verbose nil))
-    (use-package inf-ruby :ensure t :config (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
-    (use-package ruby-hash-syntax :ensure t)
-    (use-package company-inf-ruby :ensure t)
-    (add-hook 'ruby-mode-hook 'subword-mode)
-    (use-package robe
-      :ensure t 
-      :defer t
-      :init (progn
-        (require 'company)
-        (add-to-list 'company-backends 'company-robe))
-          :config (progn 
-            (add-hook 'ruby-mode-hook 'robe-mode)))
-    (use-package bundler :ensure t)
-    (use-package rubocop :ensure t :diminish rubocop-mode
-      :config (add-hook 'ruby-mode-hook 'rubocop-mode))
-    ;; Stupidly the non-bundled ruby-mode isn't a derived mode of
-    ;; prog-mode: we run the latter's hooks anyway in that case.
-    (add-hook 'ruby-mode-hook
-      (lambda ()
-         (setq company-backends '(company-robe))
-         (push 'company-inf-ruby company-backends)
-         (unless (derived-mode-p 'prog-mode)
-           (run-hooks 'prog-mode-hook)))))
+;; First, we need to ensure the ruby-mode is available
+(use-package enh-ruby-mode
+  :ensure t
+  :mode 
+    (("Gemfile\\'" . enh-ruby-mode)
+    ("Kirkfile\\'" . enh-ruby-mode)
+    ("Rakefile\\'" . enh-ruby-mode)
+    ("Vagrantfile\\'" . enh-ruby-mode)
+    ("\\.builder\\'" . enh-ruby-mode)
+    ("\\.gemspec\\'" . enh-ruby-mode)
+    ("\\.irbrc\\'" . enh-ruby-mode)
+    ("\\.pryrc\\'" . enh-ruby-mode)
+    ("\\.rake\\'" . enh-ruby-mode)
+    ("\\.rjs\\'" . enh-ruby-mode)
+    ("\\.ru\\'" . enh-ruby-mode)
+    ("\\.rb\\'" . enh-ruby-mode)
+    ("\\.rxml\\'" . enh-ruby-mode)))
+
+;; Now, lets choose what will be loaded on ruby-mode
+(add-hook 'enh-ruby-mode-hook (lambda ()
+  ;; Installing and loading
+  (use-package rvm :ensure t :config (rvm-use-default))
+  (use-package inf-ruby :ensure t) 
+  (use-package company-inf-ruby :ensure t)
+  (use-package ruby-hash-syntax :ensure t)
+  (use-package bundler :ensure t)
+  (use-package rubocop :ensure t :config (rubocop-mode))
+  (use-package robe :ensure t)
+))
 #+END_SRC
 *** org-mode
 
@@ -403,43 +398,37 @@ individual languages set here.
 ))
 #+END_SRC
 *** elixir-mode 
-elixir-mix alchemist elixir-yasnippets
+
 #+BEGIN_SRC emacs-lisp
-(use-package elixir-mode 
-:ensure t)
-(use-package elixir-mix 
-:ensure t)
-(use-package elixir-yasnippets 
-:ensure t)
-(use-package alchemist
-:ensure t)
+(use-package elixir-mode :ensure t)
+(use-package elixir-mix :ensure t)
+(use-package elixir-yasnippets :ensure t)
+(use-package alchemist :ensure t)
 #+END_SRC
 *** yaml-mode
+
 #+BEGIN_SRC emacs-lisp
-(use-package yaml-mode 
-:ensure t)
+(use-package yaml-mode :ensure t)
 #+END_SRC
 *** markdown-mode
+
 #+BEGIN_SRC emacs-lisp
-(use-package markdown-mode
-:ensure t)
+(use-package markdown-mode :ensure t)
 #+END_SRC
 *** gherkin-mode
-feature-mode 
+
 #+BEGIN_SRC emacs-lisp
-(use-package gherkin-mode
-:ensure t)
-(use-package feature-mode
-:ensure t
-:mode ("\\.feature$" . feature-mode))
+(use-package gherkin-mode :ensure t)
+(use-package feature-mode :ensure t
+  :mode ("\\.feature$" . feature-mode))
 #+END_SRC
 *** web-mode
+
 #+BEGIN_SRC emacs-lisp
-(use-package web-mode
-:ensure t)
+(use-package web-mode :ensure t)
 #+END_SRC
 *** ansible
-To help writing ansible playbooks, there are some modules like ansible-mode and ansible-doc. 
+To help writing ansible playbooks, there are some modules like ansible-mode and ansible-doc.
 #+BEGIN_SRC emacs-lisp
 (add-hook 'ansible-hook (lambda () 
   (use-package ansible :ensure t)  
@@ -461,8 +450,7 @@ To help writing ansible playbooks, there are some modules like ansible-mode and 
 *** javascript
 json-mode js2-mode js3-mode jquery-doc 
 #+BEGIN_SRC emacs-lisp
-(use-package json-mode
-:ensure t)
+(use-package json-mode :ensure t)
 #+END_SRC
 *** jekyll-modes
 hyde
