@@ -318,6 +318,10 @@ This section is reserved to configure my custom keyboard shortcuts.
 ;; Open my personal org-mode file
 (global-set-key (kbd "s-o") (lambda() 
   (interactive)(find-file "~/Documents/Wesley_TODO.org")))
+(global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "S-C-<down>") 'shrink-window)
+(global-set-key (kbd "S-C-<up>") 'enlarge-window)
 #+end_src
 
 
@@ -348,13 +352,10 @@ individual languages set here.
   :init
   (setq ruby-use-encoding-map nil)
   :config
-    (use-package rvm
-      :init (rvm-use-default)
-      :config (setq rvm-verbose nil))
-    (use-package inf-ruby 
-      :ensure t
-      :config (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
+    (use-package rvm :init (rvm-use-default) :config (setq rvm-verbose nil))
+    (use-package inf-ruby :ensure t :config (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
     (use-package ruby-hash-syntax :ensure t)
+    (use-package company-inf-ruby :ensure t)
     (add-hook 'ruby-mode-hook 'subword-mode)
     (use-package robe
       :ensure t 
@@ -365,9 +366,7 @@ individual languages set here.
           :config (progn 
             (add-hook 'ruby-mode-hook 'robe-mode)))
     (use-package bundler :ensure t)
-    (use-package rubocop
-      :ensure t
-      :diminish rubocop-mode
+    (use-package rubocop :ensure t :diminish rubocop-mode
       :config (add-hook 'ruby-mode-hook 'rubocop-mode))
     ;; Stupidly the non-bundled ruby-mode isn't a derived mode of
     ;; prog-mode: we run the latter's hooks anyway in that case.
@@ -375,8 +374,8 @@ individual languages set here.
       (lambda ()
          (setq company-backends '(company-robe))
          (push 'company-inf-ruby company-backends)
-        (unless (derived-mode-p 'prog-mode)
-          (run-hooks 'prog-mode-hook)))))
+         (unless (derived-mode-p 'prog-mode)
+           (run-hooks 'prog-mode-hook)))))
 #+END_SRC
 *** org-mode
 
