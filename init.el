@@ -10,6 +10,6 @@
 (load-file "~/.emacs.d/org-dotemacs.el")
 (let 
   (find-file-hook) 
-  (org-dotemacs-load-file ":enabled:" "~/.emacs.d/MyConfig.org"))
+  (org-dotemacs-load-file ":enabled:" "~/.emacs.d/MyConfig.org" "~/.emacs.d/MyConfig.el"))
 
 ;;; init.el ends here

@@ -1,4 +1,4 @@
-#+TAGS: enabled noexport
+#+TAGS: enabled noexport has_children
 
 * My Emacs Configuration
   
@@ -70,8 +70,8 @@ can change, and those little things stacked can make your day happiest.
   :config
   (popwin-mode 1))
 (setq display-buffer-function 'popwin:display-buffer)
-(push '("^\*helm .+\*$" :regexp t) popwin:special-display-config)
-(push '("^\*helm-.+\*$" :regexp t) popwin:special-display-config)
+;;(push '("^\*helm .+\*$" :regexp t) popwin:special-display-config)
+;;(push '("^\*helm-.+\*$" :regexp t) popwin:special-display-config)
 ;;(setq-default message-log-max nil)
 ;;(kill-buffer "*Messages*")
 (add-hook 'minibuffer-exit-hook
@@ -123,13 +123,16 @@ status bar with a beautiful theme.
 ;; A Dark theme to remember my old terminal
 
 (use-package dash :ensure t)
-(use-package zonokai-theme :ensure t)
-(if (daemonp)
-  (add-hook 'after-make-frame-functions
-    (lambda (frame)
-      (select-frame frame)
-      (load-theme 'zonokai-blue t)))
-  (load-theme 'zonokai-blue t))
+(load-theme 'molokai)
+(set-face-background 'hl-line "#1A1A1A")
+(set-background-color "#000000")
+;(use-package zonokai-theme :ensure t)
+;(if (daemonp)
+;  (add-hook 'after-make-frame-functions
+;    (lambda (frame)
+;      (select-frame frame)
+;      (load-theme 'zonokai-blue t)))
+;  (load-theme 'zonokai-blue t))
 
 ;; This font is awesome!
 (set-face-attribute 'default nil 
@@ -157,14 +160,14 @@ status bar with a beautiful theme.
 #+end_src
 
 
-** Autocomplete Features					    :enabled:
+** Autocomplete Features				       :has_children:
    
-*** helm							    :enabled:
+*** helm							   :noexport:
 
 Helm is a different way to deal with M-x menu and completions.
 It uses a powerful engine with fuzzy search and autocomplete.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noexport
 ;; We are using HELM to M-x
 (use-package helm
   :ensure t
@@ -258,9 +261,9 @@ backends to improve the completion features.
     (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
     ))
 #+end_src
-    
 
-** Snippets and Templates					    :enabled:
+
+** Snippets and Templates				       :has_children:
 
 *** Install and enable Yasnippet engine.			    :enabled:
 
@@ -333,13 +336,13 @@ This section is reserved to configure my custom keyboard shortcuts.
 
 
 
-** Development and Languages					    :enabled:
+** Development and Languages				       :has_children:
 
 Here most of the magic happens.
 There are packages, configurations and adjustments for 
 individual languages set here.
 
-*** ruby-mode
+*** ruby-mode							    :enabled:
 
 #+BEGIN_SRC emacs-lisp
 ;; First, we need to ensure the ruby-mode is available
@@ -372,7 +375,7 @@ individual languages set here.
   (use-package robe :ensure t)
 ))
 #+END_SRC
-*** org-mode
+*** org-mode							    :enabled:
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'org-mode-hook (lambda () 
@@ -382,12 +385,12 @@ individual languages set here.
   (use-package org-magit :ensure t)
   (use-package org-present :ensure t)
   (let ((color-theme-is-global nil)))
-  (load-theme 'manoj-dark t)
+  ;;(load-theme 'manoj-dark t)
   (add-hook 'completion-at-point-functions 
     'pcomplete-completions-at-point nil t)
 ))
 #+END_SRC
-*** dockerfile-mode
+*** dockerfile-mode						    :enabled:
  
 #+BEGIN_SRC emacs-lisp
 (use-package dockerfile-mode :ensure t)
@@ -397,7 +400,7 @@ individual languages set here.
   (auto-insert)
 ))
 #+END_SRC
-*** elixir-mode 
+*** elixir-mode							    :enabled:
 
 #+BEGIN_SRC emacs-lisp
 (use-package elixir-mode :ensure t)
@@ -405,29 +408,29 @@ individual languages set here.
 (use-package elixir-yasnippets :ensure t)
 (use-package alchemist :ensure t)
 #+END_SRC
-*** yaml-mode
+*** yaml-mode							    :enabled:
 
 #+BEGIN_SRC emacs-lisp
 (use-package yaml-mode :ensure t)
 #+END_SRC
-*** markdown-mode
+*** markdown-mode						    :enabled:
 
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode :ensure t)
 #+END_SRC
-*** gherkin-mode
+*** gherkin-mode						    :enabled:
 
 #+BEGIN_SRC emacs-lisp
 (use-package gherkin-mode :ensure t)
 (use-package feature-mode :ensure t
   :mode ("\\.feature$" . feature-mode))
 #+END_SRC
-*** web-mode
+*** web-mode							    :enabled:
 
 #+BEGIN_SRC emacs-lisp
 (use-package web-mode :ensure t)
 #+END_SRC
-*** ansible
+*** ansible							    :enabled:
 To help writing ansible playbooks, there are some modules like ansible-mode and ansible-doc.
 #+BEGIN_SRC emacs-lisp
 (add-hook 'ansible-hook (lambda () 
@@ -437,43 +440,43 @@ To help writing ansible playbooks, there are some modules like ansible-mode and 
   (add-to-list 'company-backends 'company-ansible)
 ))
 #+END_SRC
-*** magit
+*** magit							    :enabled:
 #+BEGIN_SRC emacs-lisp
 (use-package magit 
 :ensure t)
 #+END_SRC
-*** lorem-ipsum
-#+BEGIN_SRC emacs-lisp
-(use-package lorem-ipsum
-:ensure t)
-#+END_SRC
-*** javascript
+*** javascript							    :enabled:
 json-mode js2-mode js3-mode jquery-doc 
 #+BEGIN_SRC emacs-lisp
 (use-package json-mode :ensure t)
 #+END_SRC
-*** jekyll-modes
+*** lorem-ipsum							   :noexport:
+#+BEGIN_SRC emacs-lisp
+(use-package lorem-ipsum
+:ensure t)
+#+END_SRC
+*** jekyll-modes						   :noexport:
 hyde
 #+BEGIN_SRC emacs-lisp
 (use-package jekyll-modes 
 :ensure t)
 #+END_SRC
-*** haml-mode
+*** haml-mode							   :noexport:
 #+BEGIN_SRC emacs-lisp
 (use-package haml-mode 
 :ensure t)
 #+END_SRC
-*** eruby-mode
+*** eruby-mode							   :noexport:
 #+BEGIN_SRC emacs-lisp
 ;;(use-package eruby-mode
 ;;:ensure t)
 #+END_SRC
-*** erlang
+*** erlang							   :noexport:
 #+BEGIN_SRC emacs-lisp
 (use-package erlang
 :ensure t)
 #+END_SRC
-*** csv-mode
+*** csv-mode							   :noexport:
 csv-nav
 #+BEGIN_SRC emacs-lisp
 (use-package csv-mode
@@ -481,7 +484,7 @@ csv-nav
 (use-package csv-nav 
 :ensure t)
 #+END_SRC
-*** puppet-mode 
+*** puppet-mode							   :noexport:
 puppetfile-mode 
 #+BEGIN_SRC emacs-lisp
 (use-package puppet-mode 
