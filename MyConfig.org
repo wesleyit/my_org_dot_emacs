@@ -123,7 +123,9 @@ status bar with a beautiful theme.
 ;; A Dark theme to remember my old terminal
 
 (use-package dash :ensure t)
-(load-theme 'molokai)
+(use-package molokai-theme :ensure t
+  :config
+  (load-theme 'molokai))
 (set-face-background 'hl-line "#1A1A1A")
 (set-background-color "#000000")
 ;(use-package zonokai-theme :ensure t)
