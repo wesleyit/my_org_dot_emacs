@@ -79,6 +79,15 @@ can change, and those little things stacked can make your day happiest.
     (let ((buffer "*Completions*"))
       (and (get-buffer buffer)
         (kill-buffer buffer)))))
+;; I wanna use multiple cursors.
+(use-package multiple-cursors 
+  :ensure t
+  :config
+    (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+    (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+    (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+    (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+    (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click))
 #+end_src
 
 
@@ -435,8 +444,8 @@ individual languages set here.
 *** ansible							    :enabled:
 To help writing ansible playbooks, there are some modules like ansible-mode and ansible-doc.
 #+BEGIN_SRC emacs-lisp
+(use-package ansible :ensure t)  
 (add-hook 'ansible-hook (lambda () 
-  (use-package ansible :ensure t)  
   (use-package ansible-doc :ensure t)
   (use-package company-ansible :ensure t)
   (add-to-list 'company-backends 'company-ansible)
