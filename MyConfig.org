@@ -37,7 +37,7 @@ packages.
 #+end_src
 
 
-** Emacs Behaviors						    :enabled:
+** Emacs Behaviors 						    :enabled:
 
 This is a HUGE text editor, you know. There are lots of behaviors that we
 can change, and those little things stacked can make your day happiest.
@@ -120,24 +120,17 @@ Lets enable a dark theme, a nice font face and a new
 status bar with a beautiful theme.
 
 #+begin_src emacs-lisp
-;; A Dark theme to remember my old terminal
+;; Setting Tango Dark as default Theme
+(load-theme 'tango-dark)
 
-(use-package dash :ensure t)
-(load-theme 'molokai)
-(set-face-background 'hl-line "#1A1A1A")
-(set-background-color "#000000")
-;(use-package zonokai-theme :ensure t)
-;(if (daemonp)
-;  (add-hook 'after-make-frame-functions
-;    (lambda (frame)
-;      (select-frame frame)
-;      (load-theme 'zonokai-blue t)))
-;  (load-theme 'zonokai-blue t))
+;; Setting Font size
+(set-face-attribute 'default nil :height 110)
 
-;; This font is awesome!
-(set-face-attribute 'default nil 
-  :family "Source Code Pro for Powerline" 
-  :height 160)
+;; Configuring hl-line-mode to highlight the line 
+;; with a light gray background and to don't change
+;; the text color
+(set-face-background 'hl-line "#3e4446")
+(set-face-foreground 'highlight nil)
 
 ;; We want a well informative status line
 (global-linum-mode t)
@@ -145,7 +138,9 @@ status bar with a beautiful theme.
 (display-time)
 
 ;; The window goes to fullscreen after load
-(toggle-frame-fullscreen)
+;; This line is commented because, for Mac, the command is diffent
+;; The new command is in the Mac Only section
+; (toggle-frame-fullscreen)
 
 ;; No bars, no menus, no scrolls
 (menu-bar-mode -1)
@@ -291,22 +286,12 @@ This section will configure one tool to check the code lint and compliance,
 and another to check the spelling and grammar of text buffers.
 
 #+begin_src emacs-lisp
-(use-package flycheck-pos-tip :ensure t)
-(use-package flycheck
-  :ensure t
-  :commands global-flycheck-mode
-  :init (global-flycheck-mode)
-  :config (progn
-    (setq flycheck-check-syntax-automatically '(save mode-enabled))
-    (setq flycheck-standard-error-navigation nil)
-    ;; flycheck errors on a tooltip (doesnt work on console)
-    (when (display-graphic-p (selected-frame))
-      (eval-after-load 'flycheck
-        '(custom-set-variables
-        '(flycheck-display-errors-function 
-          #'flycheck-pos-tip-error-messages))))))
-(add-hook 'text-mode-hook 'turn-on-flyspell)
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+;; Changed flycheck to use default configurations
+;; and to display the warnings and erros in the
+;; echo area
+(use-package flycheck :ensure t )
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(setq flycheck-display-errors-function 'flycheck-display-error-messages-unless-error-list)
 #+end_src
 
 
@@ -315,6 +300,8 @@ and another to check the spelling and grammar of text buffers.
 This section is reserved to configure my custom keyboard shortcuts.
 
 #+begin_src emacs-lisp
+;; Setting the fuction keyboard key as Super
+(setq ns-function-modifier 'super)
 ;; Edit emacs config
 (global-set-key (kbd "s-e") (lambda() 
   (interactive)(find-file "~/.emacs.d/MyConfig.org")))
@@ -366,7 +353,12 @@ individual languages set here.
 ;; Now, lets choose what will be loaded on ruby-mode
 (add-hook 'enh-ruby-mode-hook (lambda ()
   ;; Installing and loading
-  (use-package rvm :ensure t :config (rvm-use-default))
+
+  ;; RVM or rbenv configuration. Uncomment according to your 
+  ;; system configuration
+  ; (use-package rvm :ensure t :config (rvm-use-default))
+  (use-package rbenv :ensure t :config (global-rbenv-mode))
+
   (use-package inf-ruby :ensure t) 
   (use-package company-inf-ruby :ensure t)
   (use-package ruby-hash-syntax :ensure t)
@@ -418,10 +410,9 @@ individual languages set here.
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode :ensure t)
 #+END_SRC
-*** gherkin-mode						    :enabled:
+*** gherkin 							    :enabled:
 
 #+BEGIN_SRC emacs-lisp
-(use-package gherkin-mode :ensure t)
 (use-package feature-mode :ensure t
   :mode ("\\.feature$" . feature-mode))
 #+END_SRC
@@ -491,4 +482,33 @@ puppetfile-mode
 :ensure t)
 (use-package puppetfile-mode
 :ensure t)
+#+END_SRC
+
+
+
+** Only for Mac 						    :enabled:
+
+#+BEGIN_SRC emacs-lisp
+;; Toggle the option key as meta - made by Me :)
+(set-cursor-color "#f8f515") ; Sets the cursor initial color
+
+(global-set-key (kbd "C-;") 'tf-toggle-option-as-meta)
+
+(defun tf-toggle-option-as-meta ()
+  "Toogle meta key."
+  (interactive)
+  (if (null mac-option-modifier)
+      (progn
+(message "Alt is meta")
+(set-cursor-color "#f8f515")
+(setq mac-option-modifier 'meta))
+    (progn
+      (message "Alt is not meta")
+      (set-cursor-color "#42dd1d")
+      (setq mac-option-modifier nil)))
+)
+
+;; Full screen mode (another desktop)
+(set-frame-parameter nil 'fullscreen 'fullboth)
+
 #+END_SRC
