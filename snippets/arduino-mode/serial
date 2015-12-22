@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Serial
+# key: ser
+# --
+Serial.begin(9600);
+Serial.println("Hello!");

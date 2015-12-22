@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pinMode
+# key: pm
+# --
+pinMode($0, OUTPUT);
