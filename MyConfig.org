@@ -109,7 +109,7 @@ modes, in all buffers.
 (g-show-paren-mode t) ;; highlight pairs of parenthesis
 (g-which-function-mode t) ;; show in which function the cursor is in
 (g-delete-selection-mode t) ;; delete or replace selected text
-(g-hl-line-mode t) ;; highlight the current line
+; (g-hl-line-mode t) ;; highlight the current line
 #+end_src
 
 
@@ -129,8 +129,8 @@ status bar with a beautiful theme.
 ;; Configuring hl-line-mode to highlight the line 
 ;; with a light gray background and to don't change
 ;; the text color
-(set-face-background 'hl-line "#3e4446")
-(set-face-foreground 'highlight nil)
+;(set-face-background 'hl-line "#3e4446")
+;(set-face-foreground 'highlight nil)
 
 ;; We want a well informative status line
 (global-linum-mode t)
@@ -319,6 +319,8 @@ This section is reserved to configure my custom keyboard shortcuts.
 (global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
 (global-set-key (kbd "S-C-<down>") 'shrink-window)
 (global-set-key (kbd "S-C-<up>") 'enlarge-window)
+
+(global-set-key (kbd "C-x C-/") 'comment-or-uncomment-region)
 #+end_src
 
 
