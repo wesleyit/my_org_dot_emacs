@@ -500,13 +500,11 @@ puppetfile-mode
 (autoload 'arduino-mode "arduino-mode" "Arduino editing mode." t)
 (rainbow-mode -1)
 (g-rainbow-mode -1)
->>>>>>> master
 #+END_SRC
 
 
 
 ** Only for Mac 						    :enabled:
-
 #+BEGIN_SRC emacs-lisp
 ;; Toggle the option key as meta - made by Me :)
 (set-cursor-color "#f8f515") ; Sets the cursor initial color
@@ -529,3 +527,4 @@ puppetfile-mode
 
 ;; Full screen mode (another desktop)
 (set-frame-parameter nil 'fullscreen 'fullboth)
+#+END_SRC
