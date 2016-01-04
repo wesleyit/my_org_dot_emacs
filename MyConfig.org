@@ -269,7 +269,8 @@ backends to improve the completion features.
     (setq company-tooltip-limit 20) ; bigger popup window
     (setq company-idle-delay .3)    ; decrease delay before autocompletion popup shows
     (setq company-echo-delay 0)     ; remove annoying blinking
-    (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+    (global-set-key (kbd "s-/") #'company-try-hard)
+    (define-key company-active-map (kbd "s-/") #'company-try-hard)
     ))
 #+end_src
 
@@ -347,7 +348,7 @@ This section is reserved to configure my custom keyboard shortcuts.
 
 
 
-** Development and Languages				       :has_children:
+** Development and Languages 				       :has_children:
 
 Here most of the magic happens.
 There are packages, configurations and adjustments for 
@@ -389,17 +390,18 @@ individual languages set here.
 *** org-mode							    :enabled:
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'org-mode-hook (lambda () 
+  (org-set-local 'yas/trigger-key [tab])
+  (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)
+  (setq org-support-shift-select 't)
   (use-package ox-reveal :ensure t)
   (use-package ox-impress-js :ensure t)
   (use-package org-jekyll :ensure t)
   (use-package org-magit :ensure t)
   (use-package org-present :ensure t)
-  (let ((color-theme-is-global nil)))
-  ;;(load-theme 'manoj-dark t)
-  (add-hook 'completion-at-point-functions 
-    'pcomplete-completions-at-point nil t)
-))
+  (setq company-backends '(company-capf))
+  (defun add-pcomplete-to-capf ()
+    (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil t))
+  (add-hook 'org-mode-hook #'add-pcomplete-to-capf)
 #+END_SRC
 *** dockerfile-mode						    :enabled:
  

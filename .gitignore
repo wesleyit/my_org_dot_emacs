@@ -5,3 +5,4 @@ helm-adaptive-history
 MyConfig.el
 recentf
 eshell
+.mc-lists.el
