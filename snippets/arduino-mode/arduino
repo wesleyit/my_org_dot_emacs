@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: arduino
+# key: ard
+# --
+void setup() {
+  $1;
+}
+
+void loop() {
+  $2;
+}

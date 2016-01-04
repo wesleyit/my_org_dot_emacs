@@ -1,3 +1,5 @@
+## -*- docker-image-name: "your-image-name-here" -*-
+
 ## Use the 8.0 version of Debian (stable)
 FROM wesleyit/ws-debian-base:jessie
 

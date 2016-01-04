@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: digitalWrite
+# key: dw
+# --
+digitalWrite($0, HIGH);

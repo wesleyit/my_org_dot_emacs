@@ -79,6 +79,15 @@ can change, and those little things stacked can make your day happiest.
     (let ((buffer "*Completions*"))
       (and (get-buffer buffer)
         (kill-buffer buffer)))))
+;; I wanna use multiple cursors.
+(use-package multiple-cursors 
+  :ensure t
+  :config
+    (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+    (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+    (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+    (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+    (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click))
 #+end_src
 
 
@@ -426,8 +435,8 @@ individual languages set here.
 *** ansible							    :enabled:
 To help writing ansible playbooks, there are some modules like ansible-mode and ansible-doc.
 #+BEGIN_SRC emacs-lisp
+(use-package ansible :ensure t)  
 (add-hook 'ansible-hook (lambda () 
-  (use-package ansible :ensure t)  
   (use-package ansible-doc :ensure t)
   (use-package company-ansible :ensure t)
   (add-to-list 'company-backends 'company-ansible)
@@ -477,13 +486,21 @@ csv-nav
 (use-package csv-nav 
 :ensure t)
 #+END_SRC
-*** puppet-mode							   :noexport:
+*** puppet-mode 						   :noexport:
 puppetfile-mode 
 #+BEGIN_SRC emacs-lisp
 (use-package puppet-mode 
 :ensure t)
 (use-package puppetfile-mode
 :ensure t)
+#+END_SRC
+*** arduino-mode						    :enabled:
+#+BEGIN_SRC emacs-lisp
+(setq auto-mode-alist (cons '("\\.\\(pde\\|ino\\)$" . arduino-mode) auto-mode-alist))
+(autoload 'arduino-mode "arduino-mode" "Arduino editing mode." t)
+(rainbow-mode -1)
+(g-rainbow-mode -1)
+>>>>>>> master
 #+END_SRC
 
 
@@ -512,5 +529,3 @@ puppetfile-mode
 
 ;; Full screen mode (another desktop)
 (set-frame-parameter nil 'fullscreen 'fullboth)
-
-#+END_SRC
