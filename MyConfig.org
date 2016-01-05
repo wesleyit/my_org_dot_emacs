@@ -507,6 +507,7 @@ puppetfile-mode
 #+END_SRC
 *** arduino-mode						    :enabled:
 #+BEGIN_SRC emacs-lisp
+(use-package arduino-mode :ensure t)
 (setq auto-mode-alist (cons '("\\.\\(pde\\|ino\\)$" . arduino-mode) auto-mode-alist))
 (autoload 'arduino-mode "arduino-mode" "Arduino editing mode." t)
 (rainbow-mode -1)
