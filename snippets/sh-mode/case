@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: case
+# key: case
+# --
+case ${1:value} in
+${2:choice1}) ${3:code} ;;
+*) ${4:default_code} ;;
+esac
+$0
