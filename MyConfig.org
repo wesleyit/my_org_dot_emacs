@@ -343,40 +343,17 @@ individual languages set here.
 *** ruby-mode							    :enabled:
 
 #+BEGIN_SRC emacs-lisp
-;; First, we need to ensure the ruby-mode is available
-(use-package enh-ruby-mode
-  :ensure t
-  :mode 
-    (("Gemfile\\'" . enh-ruby-mode)
-    ("Kirkfile\\'" . enh-ruby-mode)
-    ("Rakefile\\'" . enh-ruby-mode)
-    ("Vagrantfile\\'" . enh-ruby-mode)
-    ("\\.builder\\'" . enh-ruby-mode)
-    ("\\.gemspec\\'" . enh-ruby-mode)
-    ("\\.irbrc\\'" . enh-ruby-mode)
-    ("\\.pryrc\\'" . enh-ruby-mode)
-    ("\\.rake\\'" . enh-ruby-mode)
-    ("\\.rjs\\'" . enh-ruby-mode)
-    ("\\.ru\\'" . enh-ruby-mode)
-    ("\\.rb\\'" . enh-ruby-mode)
-    ("\\.rxml\\'" . enh-ruby-mode)))
+;; RVM or rbenv configuration. Uncomment according to your 
+;; system configuration
+; (use-package rvm :ensure t :config (rvm-use-default))
+(use-package rbenv :ensure t :config (global-rbenv-mode))
 
-;; Now, lets choose what will be loaded on ruby-mode
-(add-hook 'enh-ruby-mode-hook (lambda ()
-  ;; Installing and loading
-
-  ;; RVM or rbenv configuration. Uncomment according to your 
-  ;; system configuration
-  ; (use-package rvm :ensure t :config (rvm-use-default))
-  (use-package rbenv :ensure t :config (global-rbenv-mode))
-
-  (use-package inf-ruby :ensure t) 
-  (use-package company-inf-ruby :ensure t)
-  (use-package ruby-hash-syntax :ensure t)
-  (use-package bundler :ensure t)
-  (use-package rubocop :ensure t :config (rubocop-mode))
-  (use-package robe :ensure t)
-))
+(use-package inf-ruby :ensure t) 
+(use-package company-inf-ruby :ensure t)
+(use-package ruby-hash-syntax :ensure t)
+(use-package bundler :ensure t)
+(use-package rubocop :ensure t :config (rubocop-mode))
+(use-package robe :ensure t)
 #+END_SRC
 *** org-mode							    :enabled:
 
