@@ -12,8 +12,10 @@ There is no better tool to do this job than Org-mode. Emacs Rocks!
 
 ** About Me							    :enabled:
 
+#+BEGIN_SRC emacs-lisp
 (setq user-full-name "Wesley R. da Silva"
       user-mail-address "wesley.it@gmail.com")
+#+END_SRC
 
 
 ** Packages and Repositories					    :enabled:
@@ -24,17 +26,17 @@ I use the `use-package` tool to make things happen.
 With this macro I am able to easily install and configure
 packages.
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 (setq package-archives 
 	'(("gnu" . "http://elpa.gnu.org/packages/")
-	("marmalade" . "http://marmalade-repo.org/packages/")
-	("melpa" . "http://melpa.milkbox.net/packages/")))
+	 ("marmalade" . "http://marmalade-repo.org/packages/")
+	 ("melpa" . "http://melpa.milkbox.net/packages/")))
 (package-initialize)
 (unless (package-installed-p 'use-package)
 	(package-refresh-contents)
         (package-install 'use-package))
 (require 'use-package)
-#+end_src
+#+END_SRC
 
 
 ** Emacs Behaviors						    :enabled:
@@ -42,24 +44,29 @@ packages.
 This is a HUGE text editor, you know. There are lots of behaviors that we
 can change, and those little things stacked can make your day happiest.
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 ;; Change the backups directory when enabled, buuuut...
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
 ;; Disable backup for now and
 (setq backup-inhibited t)
+
 ;; disable auto save too
 (setq auto-save-default nil)
+
 ;; disable the session
 (desktop-save-mode -1)
 
 ;; Changes all yes/no questions to y/n
 (fset 'yes-or-no-p 'y-or-n-p)
+
 ;; Hide splash-screen and startup-message
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
 
 ;; The default buffer will be org mode
 (setq initial-major-mode 'org-mode)
+
 ;; A nice message for a nice developer :-)
 (setq initial-scratch-message 
   (concat "## Happy hacking, " (or user-login-name "") " - Emacs loves you! ##\n\n"))
@@ -70,8 +77,12 @@ can change, and those little things stacked can make your day happiest.
   :config
   (popwin-mode 1))
 (setq display-buffer-function 'popwin:display-buffer)
+
+;; Uncomment to enable HELM in popwin
 ;;(push '("^\*helm .+\*$" :regexp t) popwin:special-display-config)
 ;;(push '("^\*helm-.+\*$" :regexp t) popwin:special-display-config)
+
+;; Uncomment to disable the messages buffer
 ;;(setq-default message-log-max nil)
 ;;(kill-buffer "*Messages*")
 (add-hook 'minibuffer-exit-hook
@@ -79,6 +90,7 @@ can change, and those little things stacked can make your day happiest.
     (let ((buffer "*Completions*"))
       (and (get-buffer buffer)
         (kill-buffer buffer)))))
+
 ;; I wanna use multiple cursors.
 (use-package multiple-cursors 
   :ensure t
@@ -88,7 +100,7 @@ can change, and those little things stacked can make your day happiest.
     (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
     (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
     (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click))
-#+end_src
+#+END_SRC
 
 
 ** Global Minor Modes						    :enabled:
@@ -100,7 +112,7 @@ others nice features for all my buffers.
 This section is where those modes are configured to run as global
 modes, in all buffers.
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 ;; There are some local modules that I think they should
 ;; be on every buffer. In this section I declare them as global...
 (use-package rainbow-mode :ensure t)
@@ -120,7 +132,7 @@ modes, in all buffers.
 (g-which-function-mode t) ;; show in which function the cursor is in
 (g-delete-selection-mode t) ;; delete or replace selected text
 (g-hl-line-mode t) ;; highlight the current line
-#+end_src
+#+END_SRC
 
 
 ** Look and Feel and User Interface 				    :enabled:
@@ -129,7 +141,7 @@ Is very important to have a nice environment to work.
 Lets enable a dark theme, a nice font face and a new
 status bar with a beautiful theme.
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 ;; A Dark theme to remember my old terminal
 
 (use-package dash :ensure t)
@@ -169,7 +181,7 @@ status bar with a beautiful theme.
   :config
   (setq sml/theme 'respectful)
   (sml/setup))
-#+end_src
+#+END_SRC
 
 
 ** Autocomplete Features				       :has_children:
@@ -179,7 +191,7 @@ status bar with a beautiful theme.
 Helm is a different way to deal with M-x menu and completions.
 It uses a powerful engine with fuzzy search and autocomplete.
 
-#+begin_src emacs-lisp :noexport
+#+BEGIN_SRC emacs-lisp :noexport
 ;; We are using HELM to M-x
 (use-package helm
   :ensure t
@@ -210,7 +222,7 @@ It uses a powerful engine with fuzzy search and autocomplete.
   (define-key global-map [remap xref-find-definitions] 'helm-etags-select)
   (helm-adaptive-mode t)
   (helm-mode 1))
-#+end_src
+#+END_SRC
 
 
 *** auto-complete						   :noexport:
@@ -218,7 +230,7 @@ It uses a powerful engine with fuzzy search and autocomplete.
 Auto-complete is one of the most importants completion engines for Emacs.
 It is newer than Company and have some nice features to Python and Ruby.
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 ;; Default Autocomplete config
 ;;(use-package auto-complete
 ;;:ensure t)
@@ -249,7 +261,7 @@ It is newer than Company and have some nice features to Python and Ruby.
 ;;                html-mode nxml-mode sh-mode smarty-mode clojure-mode ansible-mode
 ;;                lisp-mode textile-mode markdown-mode tuareg-mode css-mode))
 ;;  (add-to-list 'ac-modes mode))
-#+end_src
+#+END_SRC
 
 
 *** company							    :enabled:
@@ -258,7 +270,7 @@ Company is the oldest and most used complete engine for Emacs.
 Is is very powerful and is backend-based: you can enable multiples
 backends to improve the completion features.
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 (use-package company
   :ensure t
   :commands global-company-mode
@@ -273,20 +285,20 @@ backends to improve the completion features.
     (global-set-key (kbd "s-/") #'company-try-hard)
     (define-key company-active-map (kbd "s-/") #'company-try-hard)
     ))
-#+end_src
+#+END_SRC
 
 
 ** Snippets and Templates				       :has_children:
 
 *** Install and enable Yasnippet engine.			    :enabled:
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 ;; We want on all buffers
 (use-package yasnippet 
   :ensure t
   :config
     (yas-global-mode 1))
-#+end_src
+#+END_SRC
    
 
 *** Configure the file templates				    :enabled:
@@ -303,7 +315,7 @@ backends to improve the completion features.
 This section will configure one tool to check the code lint and compliance,
 and another to check the spelling and grammar of text buffers.
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 (use-package flycheck-pos-tip :ensure t)
 (use-package flycheck
   :ensure t
@@ -320,20 +332,22 @@ and another to check the spelling and grammar of text buffers.
           #'flycheck-pos-tip-error-messages))))))
 (add-hook 'text-mode-hook 'turn-on-flyspell)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-#+end_src
+#+END_SRC
 
 
 ** Personal Keybindings						    :enabled:
 
 This section is reserved to configure my custom keyboard shortcuts.
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 ;; Edit emacs config
 (global-set-key (kbd "s-e") (lambda() 
   (interactive)(find-file "~/.emacs.d/MyConfig.org")))
+
 ;; Open my personal org-mode file
 (global-set-key (kbd "s-o") (lambda() 
   (interactive)(find-file "~/Documents/Wesley_TODO.org")))
+
 ;; Enable the console on ruby
 (global-set-key (kbd "s-r") (lambda()(interactive)
   (inf-ruby)
@@ -341,12 +355,13 @@ This section is reserved to configure my custom keyboard shortcuts.
   (other-window -1)
   (robe-start)
   (robe-mode)))
+
+;; Change the window's size
 (global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
 (global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
 (global-set-key (kbd "S-C-<down>") 'shrink-window)
 (global-set-key (kbd "S-C-<up>") 'enlarge-window)
-#+end_src
-
+#+END_SRC
 
 
 ** Development and Languages 				       :has_children:
