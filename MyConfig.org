@@ -58,8 +58,8 @@ can change, and those little things stacked can make your day happiest.
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
 
-;; The default buffer will be shell script
-(setq initial-major-mode 'sh-mode)
+;; The default buffer will be org mode
+(setq initial-major-mode 'org-mode)
 ;; A nice message for a nice developer :-)
 (setq initial-scratch-message 
   (concat "## Happy hacking, " (or user-login-name "") " - Emacs loves you! ##\n\n"))
@@ -104,6 +104,7 @@ modes, in all buffers.
 ;; There are some local modules that I think they should
 ;; be on every buffer. In this section I declare them as global...
 (use-package rainbow-mode :ensure t)
+(use-package projectile :ensure t :config (projectile-global-mode))
 
 (define-globalized-minor-mode g-rainbow-mode rainbow-mode rainbow-mode)
 (define-globalized-minor-mode g-electric-pair-mode electric-pair-mode electric-pair-mode)
