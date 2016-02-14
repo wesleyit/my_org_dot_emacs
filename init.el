@@ -7,9 +7,15 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-(load-file "~/.emacs.d/org-dotemacs.el")
+;; Then, load orgmode to be able to parse the config
+(setq orgmode "~/.emacs.d/org-dotemacs.el")
+(load orgmode)
+
+;; And finally generate the config.el from the config.org
+(setq config-org "~/.emacs.d/MyConfig.org")
+(setq config-el "~/.emacs.d/MyConfig.el")
 (let 
   (find-file-hook) 
-  (org-dotemacs-load-file ":enabled:" "~/.emacs.d/MyConfig.org" "~/.emacs.d/MyConfig.el"))
+  (org-dotemacs-load-file ":enabled:" config-org config-el))
 
 ;;; init.el ends here
