@@ -7,9 +7,19 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-;; Then, load orgmode to be able to parse the config
-(setq orgmode "~/.emacs.d/org-dotemacs.el")
-(load orgmode)
+;; Then, load the use-package utility with the
+;; newest org-mode and org-dotemacs
+(setq package-archives 
+  '(("gnu" . "http://elpa.gnu.org/packages/")
+    ("marmalade" . "http://marmalade-repo.org/packages/")
+    ("melpa" . "http://melpa.milkbox.net/packages/")))
+(package-initialize)
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
+(use-package org :ensure t)
+(use-package org-dotemacs :ensure t)
 
 ;; And finally generate the config.el from the config.org
 (setq config-org "~/.emacs.d/MyConfig.org")
