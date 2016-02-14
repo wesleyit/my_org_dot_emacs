@@ -27,14 +27,17 @@ With this macro I am able to easily install and configure
 packages.
 
 #+BEGIN_SRC emacs-lisp
+;; Set the repositories
 (setq package-archives 
-	'(("gnu" . "http://elpa.gnu.org/packages/")
-	 ("marmalade" . "http://marmalade-repo.org/packages/")
-	 ("melpa" . "http://melpa.milkbox.net/packages/")))
+  '(("gnu" . "http://elpa.gnu.org/packages/")
+    ("marmalade" . "http://marmalade-repo.org/packages/")
+    ("melpa" . "http://melpa.milkbox.net/packages/")))
+
+;; Ensure use-package is installed 
 (package-initialize)
 (unless (package-installed-p 'use-package)
-	(package-refresh-contents)
-        (package-install 'use-package))
+  (package-refresh-contents)
+  (package-install 'use-package))
 (require 'use-package)
 #+END_SRC
 
@@ -100,6 +103,9 @@ can change, and those little things stacked can make your day happiest.
     (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
     (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
     (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click))
+
+;; Opens my TODO list on startup
+(find-file "~/Documents/Wesley.org")
 #+END_SRC
 
 
@@ -143,20 +149,12 @@ status bar with a beautiful theme.
 
 #+BEGIN_SRC emacs-lisp
 ;; A Dark theme to remember my old terminal
-
 (use-package dash :ensure t)
 (use-package molokai-theme :ensure t
   :config
   (load-theme 'molokai))
 (set-face-background 'hl-line "#1A1A1A")
 (set-background-color "#000000")
-;(use-package zonokai-theme :ensure t)
-;(if (daemonp)
-;  (add-hook 'after-make-frame-functions
-;    (lambda (frame)
-;      (select-frame frame)
-;      (load-theme 'zonokai-blue t)))
-;  (load-theme 'zonokai-blue t))
 
 ;; This font is awesome!
 (set-face-attribute 'default nil 
@@ -283,14 +281,13 @@ backends to improve the completion features.
     (setq company-idle-delay .3)    ; decrease delay before autocompletion popup shows
     (setq company-echo-delay 0)     ; remove annoying blinking
     (global-set-key (kbd "s-/") #'company-try-hard)
-    (define-key company-active-map (kbd "s-/") #'company-try-hard)
-    ))
+    (define-key company-active-map (kbd "s-/") #'company-try-hard)))
 #+END_SRC
 
 
 ** Snippets and Templates				       :has_children:
 
-*** Install and enable Yasnippet engine.			    :enabled:
+*** Install and enable Yasnippet engine 			    :enabled:
 
 #+BEGIN_SRC emacs-lisp
 ;; We want on all buffers
@@ -370,7 +367,7 @@ Here most of the magic happens.
 There are packages, configurations and adjustments for 
 individual languages set here.
 
-*** ruby-mode							    :enabled:
+*** ruby-mode 							    :enabled:
 
 #+BEGIN_SRC emacs-lisp
 ;; First, we need to ensure the ruby-mode is available
@@ -406,6 +403,10 @@ individual languages set here.
 *** org-mode							    :enabled:
 
 #+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook (lambda ()
+  (defun add-pcomplete-to-capf ()
+    (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil t))
+  #'add-pcomplete-to-capf
   (org-set-local 'yas/trigger-key [tab])
   (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)
   (setq org-support-shift-select 't)
@@ -414,10 +415,7 @@ individual languages set here.
   (use-package org-jekyll :ensure t)
   (use-package org-magit :ensure t)
   (use-package org-present :ensure t)
-  (setq company-backends '(company-capf))
-  (defun add-pcomplete-to-capf ()
-    (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil t))
-  (add-hook 'org-mode-hook #'add-pcomplete-to-capf)
+  (setq company-backends '(company-capf))))
 #+END_SRC
 *** dockerfile-mode						    :enabled:
  
