@@ -303,6 +303,15 @@ and another to check the spelling and grammar of text buffers.
 (setq flycheck-display-errors-function 'flycheck-display-error-messages-unless-error-list)
 #+end_src
 
+To use spell check, you will have to install Aspell using homebrew.
+Use the following command to install english and portuguese dictonaries.
+
+brew install aspell --with-lang-en --with-lang-pt_BR
+
+#+begin_src emacs-lisp
+(setq ispell-program-name "/usr/local/Cellar/aspell/0.60.6.1/bin/aspell")
+#+end_src
+
 
 ** Personal Keybindings						    :enabled:
 
