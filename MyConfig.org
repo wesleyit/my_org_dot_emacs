@@ -334,6 +334,12 @@ This section is reserved to configure my custom keyboard shortcuts.
 (global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
 (global-set-key (kbd "S-C-<down>") 'shrink-window)
 (global-set-key (kbd "S-C-<up>") 'enlarge-window)
+
+;; Cycle windows with C-x Up, C-x Down
+(global-set-key (kbd "C-x <up>") 'other-window)
+(global-set-key (kbd "C-x <down>") 'other-window)
+(global-set-key (kbd "C-x C-<up>") 'other-window)
+(global-set-key (kbd "C-x C-<down>") 'other-window)
 #+END_SRC
 
 
