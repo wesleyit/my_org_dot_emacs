@@ -319,7 +319,7 @@ This section is reserved to configure my custom keyboard shortcuts.
 
 ;; Open my personal org-mode file
 (global-set-key (kbd "s-o") (lambda() 
-  (interactive)(find-file "~/Documents/Wesley_TODO.org")))
+  (interactive)(find-file "~/Documents/Organization.org")))
 
 ;; Enable the console on ruby
 (global-set-key (kbd "s-r") (lambda()(interactive)
