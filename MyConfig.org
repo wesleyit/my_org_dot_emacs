@@ -133,7 +133,7 @@ status bar with a beautiful theme.
 (load-theme 'tango-dark)
 
 ;; Setting Font size
-(set-face-attribute 'default nil :height 110)
+(set-face-attribute 'default nil :height 130)
 
 ;; Configuring hl-line-mode to highlight the line 
 ;; with a light gray background and to don't change
@@ -487,7 +487,6 @@ puppetfile-mode
 (rainbow-mode -1)
 (g-rainbow-mode -1)
 #+END_SRC
-
 
 
 ** Only for Mac 						    :enabled:
